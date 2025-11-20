@@ -1,0 +1,5 @@
+{
+  "name": "Copy of MAT Gym Access (Web)",
+  "description": "A web-based simulation of the MAT Gym Access mobile application, featuring member authentication and simulated Bluetooth door controls.",
+  "requestFramePermissions": []
+}
