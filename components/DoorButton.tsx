@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Unlock, Bluetooth, Loader2 } from 'lucide-react';
 import { LockConfig, LockState } from '../types';
-import { MockTTLockService } from '../services/mockTTLock';
+import { TTLockService } from '../services/TTLockService';
 import toast from 'react-hot-toast';
 
 interface DoorButtonProps {
@@ -19,27 +19,34 @@ export const DoorButton: React.FC<DoorButtonProps> = ({ lockConfig, disabled }) 
     const loadingToast = toast.loading(`Connecting to ${lockConfig.name}...`);
 
     try {
-      // 1. Simulate Connect
-      await MockTTLockService.connect(lockConfig.macAddress);
+      // 1. Connect Operation
+      await TTLockService.connect(lockConfig.macAddress);
       
       toast.loading(`Unlocking ${lockConfig.name}...`, { id: loadingToast });
       
-      // 2. Simulate Unlock
-      await MockTTLockService.unlock(lockConfig);
+      // 2. Unlock Operation
+      await TTLockService.unlock(lockConfig);
       
       setStatus(LockState.UNLOCKED);
       toast.success(`${lockConfig.name} Unlocked!`, { id: loadingToast });
 
-      // Auto-lock after 5 seconds (simulation)
-      setTimeout(() => {
-        setStatus(LockState.LOCKED);
-        toast(`${lockConfig.name} re-locked automatically`, { icon: '🔒' });
+      // 3. Auto-lock (Simulating Lock Operation)
+      setTimeout(async () => {
+        try {
+           // Calling the Lock operation as requested
+           await TTLockService.lock(lockConfig);
+           setStatus(LockState.LOCKED);
+           toast(`${lockConfig.name} re-locked`, { icon: '🔒' });
+        } catch (e) {
+           console.error("Auto-lock failed", e);
+           setStatus(LockState.LOCKED); // Reset state anyway
+        }
       }, 5000);
 
     } catch (error) {
       console.error(error);
       setStatus(LockState.ERROR);
-      toast.error("Failed to connect to lock. Ensure Bluetooth is on.", { id: loadingToast });
+      toast.error("Failed to communicate with lock.", { id: loadingToast });
       
       setTimeout(() => setStatus(LockState.LOCKED), 2000);
     }

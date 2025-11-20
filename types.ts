@@ -19,6 +19,7 @@ export interface LockConfig {
   macAddress: string;
   lockData: string;
   aesKey: string;
+  protocolVersion: number;
   name: string;
   color: string;
 }

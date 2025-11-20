@@ -1,6 +1,6 @@
 import { LockConfig } from './types';
 
-// Dummy TTLock Configuration as requested
+// TTLock Configuration as requested
 export const LOCK_MAC = "AA:BB:CC:DD:EE:FF";
 export const LOCK_DATA = "PUT_LOCK_DATA_HERE";
 export const AES_KEY = "PUT_AES_KEY_HERE";
@@ -13,6 +13,7 @@ export const MOCK_LOCKS: LockConfig[] = [
     macAddress: LOCK_MAC,
     lockData: LOCK_DATA,
     aesKey: AES_KEY,
+    protocolVersion: PROTOCOL_VERSION,
   },
   {
     name: "Premier Door",
@@ -20,6 +21,7 @@ export const MOCK_LOCKS: LockConfig[] = [
     macAddress: "FF:EE:DD:CC:BB:AA", // Different MAC for simulation
     lockData: LOCK_DATA,
     aesKey: AES_KEY,
+    protocolVersion: PROTOCOL_VERSION,
   },
   {
     name: "Door Keypad",
@@ -27,6 +29,7 @@ export const MOCK_LOCKS: LockConfig[] = [
     macAddress: "11:22:33:44:55:66",
     lockData: LOCK_DATA,
     aesKey: AES_KEY,
+    protocolVersion: PROTOCOL_VERSION,
   }
 ];
 
